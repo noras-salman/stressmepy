@@ -1,6 +1,6 @@
 from stressmepy import StressTest 
 
-# Number of concurent requests to be performed
+# Number of concurrent requests to be performed
 requests=500
 
 # Construct the request to be performed
