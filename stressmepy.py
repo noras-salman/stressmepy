@@ -84,10 +84,15 @@ class StressTest():
       
 
     def requestUrl(self,url,options):
+        #init
         body=None
         headers={"User-Agent":"stessmepy"}
         method="GET"
+        
+        #valid
         valid_methods=["GET","POST","PUT","DELETE"]
+
+        #Validate
         if options!=None:
             if "method" in options and options["method"] in valid_methods:
                 method=options["method"]
@@ -99,9 +104,11 @@ class StressTest():
                 for key in options["headers"]:
                     if isinstance(key,str) and isinstance(options["headers"][key],str):
                         headers[key]=options["headers"][key]
+        #init results
         connected=True
         success=True
         code=0
+        #try to perform
         try:
             if method=="POST":
                 r=requests.post(url,json=body,headers=headers)
@@ -116,6 +123,7 @@ class StressTest():
         except:
             connected=False
             success=False
+        #return
         return connected,success,code
 
     class HookThread (threading.Thread):
@@ -131,7 +139,6 @@ class StressTest():
             self.parent.log(self.id,self.count,"Started...")
             self.parent.log(self.id,self.count,"Requesting"+" "+self.url)
             datetime_start= datetime.datetime.now()
-            # r=requests.get(self.url,headers={"User-Agent":"micro_schedule"})
             connected,success,code=self.parent.requestUrl(self.url,self.options)
             datetime_end= datetime.datetime.now()
             self.parent.log(self.id,self.count,"Request ended with status"+" "+str(code))
