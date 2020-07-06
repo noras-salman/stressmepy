@@ -3,7 +3,7 @@ import requests
 
 
 class StressTest():
-    def __init__(self,url,total_requests,options=None):
+    def __init__(self,url,total_requests,options=None,detailed=False):
         self.url = url
         self.total = total_requests
         self.lowest=10000000
@@ -19,6 +19,7 @@ class StressTest():
         self.treads=[]
         self.times=[]
         self.options=options
+        self.detailed=detailed
         self.txt_log=""
     
     def run(self):
@@ -35,7 +36,7 @@ class StressTest():
             self.treads[i].join()
     
     def results(self):
-        return {
+        results= {
             "url":self.url,
             "total_requests":self.total,
             "total_time":self.total_time,
@@ -50,10 +51,12 @@ class StressTest():
                 "connected":self.connected,
                 "refused":self.refused
             },
-            "time_log":self.times,
-            "code_log":self.codes,
             "code_map":self.codes_map
         }
+        if self.detailed:
+            results["time_log"]=self.times
+            results["code_log"]=self.codes
+        return results
 
  
 
