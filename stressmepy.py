@@ -100,6 +100,7 @@ class StressTest():
             if "method" in options and options["method"] in valid_methods:
                 method=options["method"]
             if "body" in options and isinstance(options["body"],dict):
+                body={}
                 for key in options["body"]:
                     if isinstance(key,str) and isinstance(options["body"][key],str):
                         body[key]=options["body"][key]
